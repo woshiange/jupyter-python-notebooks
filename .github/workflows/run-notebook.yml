@@ -21,16 +21,16 @@ jobs:
       - name: Set  up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.11.3'
 
       - name: Install dependencies
         run: |
           pip install jupyter nbconvert
 
-      - name: Run Notebook and Generate HTML
+      - name: Convert all notebooks to HTML
         run: |
-          random_notebook=$(find . -name "*.ipynb" | shuf -n 1)
-          jupyter nbconvert --output-dir="./html" $random_notebook --to html --execute
+          for notebook in *.ipynb; do
+            jupyter nbconvert --output-dir="./html" $notebook --to html --execute
 
       - name: Commit HTML output
         uses: stefanzweifel/git-auto-commit-action@v5
