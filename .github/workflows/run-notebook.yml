@@ -27,7 +27,7 @@ jobs:
 
       - name: Run Notebook and Generate HTML
         run: |
-          jupyter nbconvert --to html --execute /los_angeles_homicides.ipynb --output /html/los_angeles_homicides.html
+          jupyter nbconvert los_angeles_homicides.ipynb --to html
 
       - name: Commit HTML output
         run: |
