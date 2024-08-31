@@ -22,11 +22,11 @@ jobs:
         run: |
           pip install jupyter nbconvert
 
-      - name: List files 
-        run: ls -la
-
       - name: Run Notebook and Generate HTML
-        # Commit all changed files back to the repository
-        - uses: stefanzweifel/git-auto-commit-action@v5
         run: |
           jupyter nbconvert los_angeles_homicides.ipynb --to html
+
+        - name: Commit HTML output
+          uses: stefanzweifel/git-auto-commit-action@v5
+          with:
+            commit_message: "Updated HTML output"
