@@ -26,15 +26,7 @@ jobs:
         run: ls -la
 
       - name: Run Notebook and Generate HTML
+        # Commit all changed files back to the repository
+        - uses: stefanzweifel/git-auto-commit-action@v5
         run: |
           jupyter nbconvert los_angeles_homicides.ipynb --to html
-
-      - name: Commit HTML output
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "Github Action"
-          git add *.html
-          git commit -m "Updted HTML output"
-          git push origin main
