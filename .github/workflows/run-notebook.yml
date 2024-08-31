@@ -31,7 +31,6 @@ jobs:
         run: |
           mkdir -p html
           for notebook in *.ipynb; do
-          for notebook in *.ipynb; do
             jupyter nbconvert "$notebook" --to html --output-dir="./html" --execute
           done
 
