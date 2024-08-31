@@ -29,7 +29,8 @@ jobs:
 
       - name: Run Notebook and Generate HTML
         run: |
-          jupyter nbconvert --output-dir="./html" los_angeles_homicides.ipynb --to html --execute
+          random_notebook=$(find . -name "*.ipynb" | shuf -n 1)
+          jupyter nbconvert --output-dir="./html" $random_notebook --to html --execute
 
       - name: Commit HTML output
         uses: stefanzweifel/git-auto-commit-action@v5
