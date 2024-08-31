@@ -29,8 +29,11 @@ jobs:
 
       - name: Convert all notebooks to HTML
         run: |
+          mkdir -p html
           for notebook in *.ipynb; do
-            jupyter nbconvert --output-dir="./html" "$notebook" --to html --execute
+          for notebook in *.ipynb; do
+            jupyter nbconvert "$notebook" --to html --output-dir="./html" --execute
+          done
 
       - name: Commit HTML output
         uses: stefanzweifel/git-auto-commit-action@v5
