@@ -1,0 +1,34 @@
+name: Run Jupyter Notebook
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set  up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install jupyter nbconvert
+
+      - name: Run Notebook and Generate HTML
+        run: |
+          jupyter nbconvert --to html --execute /los_angeles_homicides.ipynb --output /html/los_angeles_homicides.html
+
+      - name: Commit HTML output
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Github Action"
+          git add *.html
+          git commit -m "Updted HTML output"
+          git push origin main
