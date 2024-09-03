@@ -30,6 +30,7 @@ jobs:
       - name: Convert all notebooks to HTML
         run: |
           mkdir -p html
+          export FROM_NBCONVERT=true
           for notebook in *.ipynb; do
             jupyter nbconvert "$notebook" --to html --output-dir="./html" --execute
           done
