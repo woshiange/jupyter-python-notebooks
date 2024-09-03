@@ -36,7 +36,6 @@ jobs:
           done
 
       - name: Commit HTML output
-        run: |
-          git add .
-          git commit -m "Updated by github action"
-          git push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Updated from cron job"
