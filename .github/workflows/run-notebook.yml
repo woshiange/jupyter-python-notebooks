@@ -27,7 +27,7 @@ jobs:
         run: |
           pip install jupyter nbconvert
 
-      - name: Convert all notebooks to HTML
+      - name: Run all notebooks and convert to HTML
         run: |
           mkdir -p html
           export FROM_NBCONVERT=true
@@ -37,6 +37,8 @@ jobs:
 
       - name: Commit HTML output
         run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "bot@github.com"
           git add .
           git commit -m "Updated by github action"
           git push
