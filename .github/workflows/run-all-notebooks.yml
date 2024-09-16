@@ -1,9 +1,9 @@
 name: Run All Jupyter Notebooks
 
 on:
-  workflow_dispatch:
-    branches:
-      - main
+  schedule:
+    # Run at 01:00 UTC every day
+    - cron: '0 1 * * *'
 
 jobs:
   build:
