@@ -30,9 +30,11 @@ jobs:
 
       - name: Run all notebooks and convert to HTML
         run: |
+          export FROM_NBCONVERT=true
           mkdir -p html
           for notebook in *.ipynb; do
-            jupyter nbconvert "$notebook" --to html --output-dir="./html" --execute
+            jupyter nbconvert "$notebook" --to notebook --execute --inplace
+            jupyter nbconvert "$notebook" --to html --output-dir="./html"
           done
 
       - name: Commit HTML output
