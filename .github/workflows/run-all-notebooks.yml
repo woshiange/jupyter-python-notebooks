@@ -33,8 +33,7 @@ jobs:
           export FROM_NBCONVERT=true
           mkdir -p html
           for notebook in *.ipynb; do
-            jupyter nbconvert "$notebook" --to notebook --execute --inplace
-            jupyter nbconvert "$notebook" --to html --output-dir="./html"
+            jupyter nbconvert "$notebook" --to html --output-dir="./html" --execute
           done
 
       - name: Commit HTML output
