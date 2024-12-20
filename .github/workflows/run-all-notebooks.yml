@@ -28,6 +28,16 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install Google Cloud SDK
+        run: |
+          pip install google-auth
+
+      - name: Configure GCP ADC
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/gcp-key.json
+        run: |
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT }}" > $GOOGLE_APPLICATION_CREDENTIALS
+
       - name: Run all notebooks and convert to HTML
         run: |
           export FROM_NBCONVERT=true
