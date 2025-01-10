@@ -44,6 +44,10 @@ jobs:
             jupyter nbconvert "$notebook" --to html --output-dir="./html" --execute
           done
 
+      - name: Add timeout for the require js library
+        run: |
+          python ./.github/add_requires_timeout.py
+
       - name: Commit HTML output
         run: |
           git config --global user.name "GitHub Actions Bot"
