@@ -1,0 +1,54 @@
+name: Run All Jupyter Notebooks
+
+on:
+  schedule:
+    # Run at 01:00 UTC every day
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN permission to commit and push
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11.3'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: GCP auth for Bigquery access
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Run all notebooks and convert to HTML
+        run: |
+          export FROM_NBCONVERT=true
+          mkdir -p html
+          for notebook in *.ipynb; do
+            jupyter nbconvert "$notebook" --to html --output-dir="./html" --execute
+          done
+
+      - name: Add timeout for the require js library
+        run: |
+          python ./.github/add_requires_timeout.py
+
+      - name: Commit HTML output
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "bot@github.com"
+          git add html
+          git commit -m "Updated by github action"
+          git push
