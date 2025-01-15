@@ -24,9 +24,7 @@ def add_require_timeout(html_file):
         });
     """
 
-    if soup.head:
-        soup.head.append(new_script)
-    elif soup.body:
+    if soup.body:
         soup.body.append(new_script)
     else:
         soup.append(new_script)
